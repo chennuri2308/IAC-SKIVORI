@@ -1,6 +1,11 @@
 name: "skivori Infra code"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - terraform/**
+
 
 
 env:
@@ -27,7 +32,7 @@ jobs:
       steps:
         
         - name: Checkout source code
-          uses: actions/checkout@v4
+          uses: actions/checkout@v3
 
         - name: Setup Terraform with specified version on the runner
           uses: hashicorp/setup-terraform@v2
