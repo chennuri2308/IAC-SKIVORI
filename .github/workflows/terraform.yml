@@ -15,7 +15,7 @@ env:
  EKS_CLUSTER: skivoriterrastate
 
 
- jobs:
+jobs:
     terraform:
       name: "Apply terraform code changes"
       runs-on: ubuntu-latest
@@ -54,4 +54,4 @@ env:
         - name: Terraform plan status
           if: steps.plan.outcome == 'failure'
           run: exit 1
-          
+
