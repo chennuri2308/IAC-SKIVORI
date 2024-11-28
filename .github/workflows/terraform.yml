@@ -27,7 +27,7 @@ jobs:
         
         - name: Checkout source code
           uses: actions/checkout@v4
-          
+
         - name: Debug Directory Structure
           run: ls -R
 
@@ -50,7 +50,7 @@ jobs:
         
         - name: terraform plan
           id: plan
-          run: terraform plan -no-color -input=flase -out planfile
+          run: terraform plan -no-color -input=flase -out=planfile
           continue-on-error: true
 
         - name: Terraform plan status
