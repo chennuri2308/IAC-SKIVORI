@@ -1,9 +1,7 @@
 name: "skivori Infra code"
 
 on: workflow_dispatch
-
-
-
+  
 env:
  # Credentails for deployment to aws
 
@@ -23,20 +21,20 @@ jobs:
       defaults:
         run:
          shell: bash
-         working-directory: ./terraform***
+         working-directory: ./terraform
       
       steps:
         
         - name: Checkout source code
-          uses: actions/checkout@v3
-
+          uses: actions/checkout@v4
+          
         - name: Debug Directory Structure
           run: ls -R
 
         - name: Setup Terraform with specified version on the runner
           uses: hashicorp/setup-terraform@v2
-          #with:
-           #  terraform_version: 1.9.8
+          with:
+            terraform_version: 1.9.8
         
         - name: Terraform init
           id: init
