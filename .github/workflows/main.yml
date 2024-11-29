@@ -60,9 +60,37 @@ jobs:
           if: steps.plan.outcome == 'failure'
           run: exit 1
         
-        - name: Terraform Apply
-          id: deploy
-          if: github.ref == 'refs/heads/main'  && github.event_name == 'push'
-          run: terraform apply -auto-approve -input=false -parallelism=1 planfile
+       # - name: Terraform Apply
+        #  id: deploy
+         # if: github.ref == 'refs/heads/main'  && github.event_name == 'push'
+          #run: terraform apply -auto-approve -input=false -parallelism=1 planfile
 
-##
+    terraform-destroy:
+    name: "Destroy Terraform resources"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'delete' # Trigger conditions for destroy
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Debug Directory Structure
+        run: ls -R
+
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.9.8
+
+      - name: Terraform init
+        id: init
+        run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy -auto-approve -input=false -parallelism=1
