@@ -3,7 +3,7 @@ name: "skivori Infra code"
 on: workflow_dispatch
   
 env:
- # Credentails for deployment to aws
+ # Credentails for infra deployment
 
  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -56,5 +56,10 @@ jobs:
         - name: Terraform plan status
           if: steps.plan.outcome == 'failure'
           run: exit 1
+        
+        - name: Terraform Apply
+          id: depploy infra
+          if: github.ref == 'refs/heads/main'  && github.event_name == 'push'
+          run: terraform apply -auto-approve -nput=false -parallelism=1 planfile
 
 ##
