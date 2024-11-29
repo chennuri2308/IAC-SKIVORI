@@ -1,6 +1,9 @@
 name: "skivori Infra code"
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
   
 env:
  # Credentails for infra deployment
@@ -58,7 +61,7 @@ jobs:
           run: exit 1
         
         - name: Terraform Apply
-          id: depploy infra
+          id: deploy infra
           if: github.ref == 'refs/heads/main'  && github.event_name == 'push'
           run: terraform apply -auto-approve -input=false -parallelism=1 planfile
 
