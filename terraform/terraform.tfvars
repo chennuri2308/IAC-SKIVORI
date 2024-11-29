@@ -1,5 +1,5 @@
 region            = "eu-central-1"
-ami_id            = "ami-0453ec754f44f9a4a"
+ami_id            = "ami-09cf9fe5131a27038"
 instance_type     = "t2.micro"
 key_name          = "sk" # Replace with your actual key pair name
 user_data         = <<EOF
